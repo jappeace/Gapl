@@ -1,0 +1,4 @@
+dependencies {
+	//client scripts in groovy
+	compile "org.codehaus.groovy:groovy:2.4.4"
+}

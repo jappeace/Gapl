@@ -1,40 +1,38 @@
-apply plugin: 'scala'
-apply plugin: 'idea'
-apply plugin: 'application'
+apply plugin: "idea"
+apply plugin: "eclipse"
 
-def javaVersion = 1.7
-sourceCompatibility = javaVersion
-targetCompatibility = javaVersion
-version = '1'
-jar {
-    manifest {
-		attributes 'Implementation-Title': 'GAPL',
-	   'Implementation-Version':version
-   }
-}
-configurations {
-    markdownDoclet
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2'
+	// https kept failing in my case, http still works
+	distributionUrl = distributionUrl.replace("https", "http")
 }
 
-repositories {
-    mavenCentral()
-	jcenter()
-}
-
-dependencies {
-
-	def scalaVersion = '2.11'
-	//main code base in scala
-	compile "org.scala-lang:scala-library-all:${scalaVersion}.5"
-	//client scripts in groovy
-	compile "org.codehaus.groovy:groovy-all:2.3.8"
-
-	//minor library for mardown being parsed in javadoc
-	markdownDoclet('ch.raffael.pegdown-doclet:pegdown-doclet:1.1.1')
-}
-
-javadoc.options {
-    docletpath = configurations.markdownDoclet.files.asType(List)
-	doclet = "ch.raffael.doclets.pegdown.PegdownDoclet"
-	addStringOption("parse-timeout", "10")
+subprojects{
+	apply plugin: 'scala'
+	version = 1 // sprint
+	sourceCompatibility = JavaVersion.VERSION_1_7
+	targetCompatibility = JavaVersion.VERSION_1_7
+	ext{
+		versionGroovy = "2.4"
+		versionGroovyMinor = "3"
+	}
+	repositories{
+		mavenLocal()
+		mavenCentral()
+	}
+	configurations {
+		markdownDoclet
+	}
+	dependencies {
+		def scalaVersion = '2.11'
+		//main code base in scala
+		compile "org.scala-lang:scala-library-all:${scalaVersion}.5"
+		//minor library for mardown being parsed in javadoc
+		markdownDoclet('ch.raffael.pegdown-doclet:pegdown-doclet:1.1.1')
+	}
+	javadoc.options {
+		docletpath = configurations.markdownDoclet.files.asType(List)
+		doclet = "ch.raffael.doclets.pegdown.PegdownDoclet"
+		addStringOption("parse-timeout", "10")
+	}
 }

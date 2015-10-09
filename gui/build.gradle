@@ -1,0 +1,11 @@
+apply plugin: 'application'
+
+jar {
+    manifest {
+		attributes 'Implementation-Title': 'GAPL',
+	   'Implementation-Version':version
+   }
+}
+dependencies {
+	project(':library')
+}

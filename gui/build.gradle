@@ -1,5 +1,6 @@
 apply plugin: 'application'
 
+mainClassName = "nl.jappieklooster.gapl.gui.Main"
 jar {
     manifest {
 		attributes 'Implementation-Title': 'GAPL',

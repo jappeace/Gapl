@@ -1,4 +1,6 @@
 package nl.jappieklooster.gapl.gui;
-class Main(){
-	println("hello world!")
+object Main{
+	def main(args:Array[String]) = {
+		println("hello world!")
+	}
 }

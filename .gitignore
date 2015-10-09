@@ -1,0 +1,3 @@
+#vim auto save files
+*.swp
+*.swo

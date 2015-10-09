@@ -4,3 +4,6 @@
 
 #gradle
 .gradle
+
+#binary folders
+build/

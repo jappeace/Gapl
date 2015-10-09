@@ -12,10 +12,7 @@ subprojects{
 	version = 1 // sprint
 	sourceCompatibility = JavaVersion.VERSION_1_7
 	targetCompatibility = JavaVersion.VERSION_1_7
-	ext{
-		versionGroovy = "2.4"
-		versionGroovyMinor = "3"
-	}
+
 	repositories{
 		mavenLocal()
 		mavenCentral()
@@ -24,9 +21,8 @@ subprojects{
 		markdownDoclet
 	}
 	dependencies {
-		def scalaVersion = '2.11'
 		//main code base in scala
-		compile "org.scala-lang:scala-library-all:${scalaVersion}.5"
+		compile "org.scala-lang:scala-library-all:2.11.7"
 		//minor library for mardown being parsed in javadoc
 		markdownDoclet('ch.raffael.pegdown-doclet:pegdown-doclet:1.1.1')
 	}

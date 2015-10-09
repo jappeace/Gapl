@@ -7,3 +7,9 @@
 
 #binary folders
 build/
+
+#IDE stuff
+## Intelij
+*.ipr
+*.iml
+*.iws

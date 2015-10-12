@@ -1,8 +1,14 @@
 package nl.jappieklooster.gapl.lib.model
 
+import groovy.lang.Closure
+
 /**
- * whatever the hell an agent is, its lke an agent.
+ * believes are just data
+ * deductions is data derived from the beleives
  */
-case class Agent(believes : Map[String, Seq[Any]]) {
-	def this() = this(Map())
+case class Agent(
+	believes : Map[String, Iterable[Any]],
+	deductions :Map[String, Closure[Any]]
+) {
+	def this() = this(Map(), Map())
 }

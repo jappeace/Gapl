@@ -1,3 +1,4 @@
+apply plugin: 'scala'
 apply plugin: 'application'
 
 mainClassName = "nl.jappieklooster.gapl.gui.Main"

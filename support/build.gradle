@@ -1,5 +1,4 @@
 dependencies {
-	compile(project(":support"))
 	//client scripts in groovy
 	compile "org.codehaus.groovy:groovy:2.4.4"
 	compile "org.slf4j:slf4j-api:1.7.12"

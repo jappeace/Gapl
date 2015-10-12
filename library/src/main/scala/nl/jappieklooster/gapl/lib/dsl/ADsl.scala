@@ -1,7 +1,8 @@
-package nl.jappieklooster.gapl.lib.dsl;
+package nl.jappieklooster.gapl.lib.dsl
 
-
-import groovy.lang.Closure;
+import groovy.lang.Closure
+import groovy.lang.MissingMethodException
+import nl.jappieklooster.groovy.meta.IMissingMethodHandler
 
 /**
  * just a base class
@@ -15,16 +16,31 @@ import groovy.lang.Closure;
  * dsl classes are more than often error handlers than anything else, make sure to log any user fuckups so he can learn
  * And don't trust the input
  */
-public abstract class ADsl{
-
+abstract class ADsl {
 	/**
 	 * call the closure with the object as delegate
 	 * @param commands
 	 * @param to
 	 */
-	protected <T> T delegate(final Closure<T> commands, final Object to){
-		commands.setDelegate(to);
-		commands.setResolveStrategy(Closure.DELEGATE_FIRST);
-		return commands.call();
+	protected def delegate[T](commands: Closure[T], to: AnyRef): Option[T] = {
+		commands.setDelegate(to)
+		commands.setResolveStrategy(Closure.DELEGATE_FIRST)
+		try {
+			return Some(commands.call)
+		}
+		catch {
+			// this is something groovy should do out of the box, but doesn't seem
+			// to work
+			case missing: MissingMethodException=> {
+				to match{
+					case  handler:IMissingMethodHandler=>
+						handler.methodMissing(missing.getMethod, missing.getArguments)
+						return None
+				}
+				throw missing
+			}
+			// something else
+			case exception:Throwable => throw exception
+		}
 	}
 }

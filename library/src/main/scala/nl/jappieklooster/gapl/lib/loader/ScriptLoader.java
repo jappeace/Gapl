@@ -1,10 +1,12 @@
-package nl.jappieklooster.gapl.lib;
+package nl.jappieklooster.gapl.lib.loader;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.util.DelegatingScript;
 import org.codehaus.groovy.control.CompilationFailedException;
 import org.codehaus.groovy.control.CompilerConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +21,7 @@ import java.nio.file.Path;
 public class ScriptLoader {
 
 	private GroovyShell shell;
+	private Logger log = LoggerFactory.getLogger(ScriptLoader.class);
 	public ScriptLoader(){
         final CompilerConfiguration compilerConfig = new CompilerConfiguration();
         compilerConfig.setScriptBaseClass(DelegatingScript.class.getName());
@@ -32,14 +35,9 @@ public class ScriptLoader {
 	 * @param delagate this object will handle the dsl calls
 	 * @return succes
 	 */
-	public boolean load(final Path path, Object delagate){
-		//Log.info("loadin script: " + path);
+	public boolean load(final File file, Object delagate){
+		log.info("loadin script: " + file.getPath());
 		boolean success = false;
-		final File file = path.toFile();
-		if(!file.isFile()){
-			//Log.warn("script file is not a file: " + path + " \n pwd: " + new File(".").getAbsolutePath());
-			return success;
-		}
 
 		try {
 			final DelegatingScript script = (DelegatingScript)shell.parse(file);

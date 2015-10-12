@@ -8,6 +8,6 @@ jar {
    }
 }
 dependencies {
-	project(':library')
-	compile "org.slf4j:slf4j-log4j12:1.7.12"
+	compile(project(':library'))
+	compile "org.slf4j:slf4j-simple:1.7.12"
 }

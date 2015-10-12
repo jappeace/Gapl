@@ -1,0 +1,4 @@
+package script
+believes{
+    position(0,0)
+}

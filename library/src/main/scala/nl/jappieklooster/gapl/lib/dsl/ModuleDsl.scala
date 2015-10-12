@@ -1,5 +1,12 @@
-package nl.jappieklooster.gapl.lib.dsl;
+package nl.jappieklooster.gapl.lib.dsl
 
-class ModuleDsl() extends ADsl{
-	def believe() = println("aah")
+import groovy.lang.Closure
+import nl.jappieklooster.gapl.lib.model.Agent
+
+class ModuleDsl(var subject:Agent) extends ADsl {
+	def believes(commands:Closure[Void]):Unit = {
+		val dsl = new BelieveDsl(subject)
+		delegate(commands, dsl)
+		subject = dsl.subject
+	}
 }

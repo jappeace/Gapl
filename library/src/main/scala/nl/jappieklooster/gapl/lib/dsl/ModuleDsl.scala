@@ -12,4 +12,7 @@ class ModuleDsl(var subject:Agent) extends ADsl {
 		delegate(commands, interceptor)
 		subject = dsl.subject
 	}
+	def goals(commands:Closure[Void]): Unit ={
+	}
+
 }

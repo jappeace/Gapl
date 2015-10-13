@@ -7,8 +7,7 @@ import nl.jappieklooster.gapl.lib.model.Agent
 
 
 /**
- * Agent loader, created targeted at an environment (something the agent can
- * interact with, (weakly typed because groovy)).
+ * Agent loader, creates agent based on scripts found in files
  *
  * put in a path to a file
  * @param environment

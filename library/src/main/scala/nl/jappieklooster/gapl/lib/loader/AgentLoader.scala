@@ -17,8 +17,7 @@ class AgentLoader(environment: AnyRef) {
 	val loader = new ScriptLoader()
 
 	def load(file:File):Agent = {
-		val result = new Agent()
-		val module = new ModuleDsl(result)
+		val module = new ModuleDsl(new Agent())
 		loader.load(file, module)
 		return module.subject
 	}

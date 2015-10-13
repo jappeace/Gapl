@@ -1,6 +1,9 @@
 package nl.jappieklooster.gapl.lib.dsl
 
+import java.io.File
+
 import groovy.lang.Closure
+import nl.jappieklooster.gapl.lib.loader.AgentLoader
 import nl.jappieklooster.gapl.lib.model.Agent
 import nl.jappieklooster.groovy.MissingMethodInterceptor
 import nl.jappieklooster.groovy.meta.IMissingMethodHandler
@@ -55,6 +58,8 @@ class ModuleDsl(var subject:Agent) extends ADsl {
 	 * @param file
 	 */
 	def load(file:String): Unit ={
+		val loader = new AgentLoader
+		subject = loader.load(new File(file), subject)
 	}
 
 }

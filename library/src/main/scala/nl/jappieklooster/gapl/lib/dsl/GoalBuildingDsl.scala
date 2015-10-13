@@ -5,8 +5,8 @@ import nl.jappieklooster.gapl.lib.model.Agent
 import nl.jappieklooster.groovy.meta.IMissingMethodHandler
 import org.slf4j.{Logger, LoggerFactory}
 
-class GoalDsl(var subject:Agent) extends IMissingMethodHandler{
-	private val log: Logger = LoggerFactory.getLogger(classOf[GoalDsl])
+class GoalBuildingDsl(var subject:Agent) extends IMissingMethodHandler{
+	private val log: Logger = LoggerFactory.getLogger(classOf[GoalBuildingDsl])
 
 	def methodMissing(name: String, args: Array[AnyRef]): Unit= {
 		if(subject.goals.contains(name)){

@@ -23,7 +23,7 @@ class ModuleDsl(var subject:Agent) extends ADsl {
 	 * @param commands
 	 */
 	def believes(commands:Closure[Void]):Unit = {
-		val dsl = new BelieveDsl(subject)
+		val dsl = new BelieveBuildingDsl(subject)
 		delegate(commands, wrap(dsl))
 		subject = dsl.subject
 	}
@@ -33,7 +33,7 @@ class ModuleDsl(var subject:Agent) extends ADsl {
 	 * @param commands
 	 */
 	def goals(commands:Closure[Void]): Unit ={
-		val dsl = new GoalDsl(subject)
+		val dsl = new GoalBuildingDsl(subject)
 		delegate(commands, wrap(dsl))
 		subject = dsl.subject
 	}

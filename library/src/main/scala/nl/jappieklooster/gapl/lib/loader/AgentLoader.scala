@@ -1,8 +1,7 @@
 package nl.jappieklooster.gapl.lib.loader
 
 import java.io.File
-
-import nl.jappieklooster.gapl.lib.dsl.ModuleDsl
+import nl.jappieklooster.gapl.lib.dsl.building.ModuleDsl
 import nl.jappieklooster.gapl.lib.model.Agent
 
 

@@ -14,7 +14,7 @@ import groovy.lang.Closure
  * dsl classes are more than often error handlers than anything else, make sure to log any user fuckups so he can learn
  * And don't trust the input
  */
-abstract class ADsl {
+trait Delegator {
 	/**
 	 * call the closure with the object as delegate
 	 * @param commands

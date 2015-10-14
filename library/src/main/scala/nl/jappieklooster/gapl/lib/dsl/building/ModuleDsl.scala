@@ -1,8 +1,9 @@
-package nl.jappieklooster.gapl.lib.dsl
+package nl.jappieklooster.gapl.lib.dsl.building
 
 import java.io.File
 
 import groovy.lang.Closure
+import nl.jappieklooster.gapl.lib.dsl.Delegator
 import nl.jappieklooster.gapl.lib.loader.AgentLoader
 import nl.jappieklooster.gapl.lib.model.Agent
 import nl.jappieklooster.groovy.MissingMethodInterceptor
@@ -20,7 +21,7 @@ import nl.jappieklooster.groovy.meta.IMissingMethodHandler
  * Its main purpose is to mutate the subject by choosing the right dsl.
  * @param subject
  */
-class ModuleDsl(var subject:Agent) extends ADsl {
+class ModuleDsl(var subject:Agent) extends Delegator {
 	/**
 	 * defines  the believes of the agent with help of another dsl
 	 * @param commands

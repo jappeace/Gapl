@@ -1,4 +1,4 @@
-package nl.jappieklooster.gapl.lib.dsl
+package nl.jappieklooster.gapl.lib.dsl.building
 
 import groovy.lang.Closure
 import nl.jappieklooster.gapl.lib.model.Agent

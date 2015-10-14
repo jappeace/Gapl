@@ -1,13 +1,13 @@
 #General agent programming language
-The idea is to create a groovy dsl that works simliar to 2apl.
+The idea is to create a groovy DSL that works similar to 2apl.
 2apl uses prolog to design its code, however I thought it would
-look syntasticly a lot better in a groovy dsl.
+look syntastic a lot better in a groovy DSL.
 
-Using a groovy dsl has the added advantage of having the entire groovy
-code base behind you in the DSL, and Groovy is increadibly easy to understand
+Using a groovy DSL has the added advantage of having the entire groovy
+code base behind you in the DSL, and Groovy is incredibly easy to understand
 Python level easy.
 
-## Design overview:
+## Design overview
 (not completed)
 So the main idea is that you have a `java/groovy/scala/any jvm langauge that
 can use jars` project and you import this library to load your own defined

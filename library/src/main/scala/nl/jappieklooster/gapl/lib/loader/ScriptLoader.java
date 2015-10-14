@@ -38,7 +38,10 @@ public class ScriptLoader {
 	public boolean load(final File file, Object delagate){
 		log.info("loadin script: " + file.getPath());
 		boolean success = false;
-
+		if(!file.isFile()){
+			log.warn("script loading failed, not a file");
+			return success;
+		}
 		try {
 			final DelegatingScript script = (DelegatingScript)shell.parse(file);
             script.setDelegate(delagate);

@@ -4,13 +4,14 @@ import akka.actor.Actor
 import groovy.lang.Closure
 import nl.jappieklooster.gapl.lib.dsl.Delegator
 import nl.jappieklooster.gapl.lib.dsl.execution.BelieveExecutionDsl
-import nl.jappieklooster.gapl.lib.model.Agent
+import nl.jappieklooster.gapl.lib.model.{Command, Update, Agent}
+import nl.jappieklooster.gapl.lib.model.message.Update
 import org.slf4j.LoggerFactory
 
 /**
  * Execute a single agent.
  */
-class AgentController(var agent:Agent) extends Actor with Delegator{
+class AgentController(private var agent:Agent) extends Actor with Delegator{
 	val log = LoggerFactory.getLogger(classOf[AgentController])
 	def execute(): Unit = {
 		var resultingGoals = agent.goals
@@ -38,5 +39,18 @@ class AgentController(var agent:Agent) extends Actor with Delegator{
 		return false
 	}
 
-	override def receive: Receive = ???
+	private var isStopped = false
+	override def receive: Receive = {
+		case Command.Stop =>
+			isStopped = true
+		case Command.Start =>
+			isStopped = false
+			self ! Update(1)
+		case Update(tickNumber) => {
+			execute()
+			if(!isStopped){
+				self ! Update(tickNumber+1)
+			}
+		}
+	}
 }

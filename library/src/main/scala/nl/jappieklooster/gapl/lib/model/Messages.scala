@@ -1,7 +1,5 @@
 package nl.jappieklooster.gapl.lib.model
 
-class Messages(){}
-
 /**
  * Commands for the agents
  */

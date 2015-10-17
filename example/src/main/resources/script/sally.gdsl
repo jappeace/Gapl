@@ -1,10 +1,11 @@
 package script
 believes{
     position(0,0)
-    finish{belief.position == [10, 10]}
+    finish{believes.position == [10, 10]}
 }
 goals{
     finish{
         println("trying to finish")
+        environment.interact("finishing??")
     }
 }

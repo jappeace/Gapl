@@ -2,22 +2,23 @@ package nl.jappieklooster.gapl.lib.controller
 
 import akka.actor.Actor
 import groovy.lang.Closure
+import nl.jappieklooster.gapl.Log
 import nl.jappieklooster.gapl.lib.dsl.Delegator
-import nl.jappieklooster.gapl.lib.dsl.execution.BelieveExecutionDsl
-import nl.jappieklooster.gapl.lib.model.{Command, Update, Agent}
-import nl.jappieklooster.gapl.lib.model.message.Update
-import org.slf4j.LoggerFactory
+import nl.jappieklooster.gapl.lib.dsl.execution.{BelieveExecutionDsl, GoalExecutionDsl}
+import nl.jappieklooster.gapl.lib.model.{Agent, Command, Update}
 
 /**
  * Execute a single agent.
  */
-class AgentController(private var agent:Agent) extends Actor with Delegator{
-	val log = LoggerFactory.getLogger(classOf[AgentController])
+class AgentController(private var agent:Agent, environment:AnyRef) extends Actor with Delegator{
+	val log = Log.get[AgentController]
 	def execute(): Unit = {
 		var resultingGoals = agent.goals
 		for((name, value) <- agent.goals){
 			if(goalComplete(name)){
 				resultingGoals -= name
+			}else{
+				delegate(value, new GoalExecutionDsl(agent, environment))
 			}
 		}
 		agent = agent.copy(goals = resultingGoals)
@@ -30,8 +31,6 @@ class AgentController(private var agent:Agent) extends Actor with Delegator{
 			for(believe <- believeValueArray.find((a:Any) => true)){
 				believe match{
 					case deduction:Closure[Boolean] =>
-						log.debug("checking")
-						log.info("the if the believe finished")
 						return delegate(deduction, new BelieveExecutionDsl(agent))
 				}
 			}

@@ -5,10 +5,8 @@ import java.nio.file.Path
 
 import akka.actor._
 import nl.jappieklooster.gapl.lib.loader.AgentLoader
-import nl.jappieklooster.gapl.lib.model.{Command, Update, Agent}
-import nl.jappieklooster.gapl.lib.model.message.Update
-
-import scala.collection.TraversableLike
+import nl.jappieklooster.gapl.lib.model.{Agent, Command}
+import org.slf4j.LoggerFactory
 
 
 /**
@@ -16,11 +14,16 @@ import scala.collection.TraversableLike
  */
 class MultiAgentController(path:Path) {
 	private var actors:Seq[ActorRef] = Nil
+	var log = LoggerFactory.getLogger(classOf[MultiAgentController])
 	def start(environment: AnyRef) = {
-		val system = ActorSystem("s")
+		if(actors != Nil){
+			log.warn("actors still exist, " +
+					 "system should be stopped before restarting")
+		}
+		val system = ActorSystem(this.getClass.getSimpleName)
 		actors = createAgents().map(
 			a => {
-				val r = system.actorOf(Props(classOf[AgentController], a))
+				val r = system.actorOf(Props(classOf[AgentController], a, environment))
 				r ! Command.Start
 				r
 			}
@@ -31,7 +34,7 @@ class MultiAgentController(path:Path) {
 			actor ! Command.Stop
 		}
 	}
-	def createAgents():Seq[Agent] = {
+	private def createAgents():Seq[Agent] = {
 		var result:Seq[Agent] = Vector()
 		val loader = new AgentLoader
 		val file = path.toFile

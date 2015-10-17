@@ -1,11 +1,19 @@
 package nl.jappieklooster.gapl.gui;
 
-import java.io.File
+import java.nio.file.Paths
 
-import nl.jappieklooster.gapl.lib.loader.AgentLoader
+import nl.jappieklooster.gapl.Log
+import nl.jappieklooster.gapl.lib.controller.MultiAgentController
+
 object Main{
+	val log = Log.default()
+	val controller = new MultiAgentController(Paths.get("build/resources/main/script"))
 	def main(args:Array[String]):Unit = {
-		val loader = new AgentLoader()
-		println(loader.load(new File("build/resources/main/script/sally.gdsl")))
+		controller.start(this)
+	}
+
+	def interact(arg:String): Unit = synchronized {
+		log.info(arg)
+		controller.stop()
 	}
 }

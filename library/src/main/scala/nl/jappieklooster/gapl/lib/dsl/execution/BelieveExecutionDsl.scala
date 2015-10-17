@@ -11,5 +11,12 @@ import scala.collection.JavaConversions._
  * @param agent
  */
 class BelieveExecutionDsl(agent:Agent) extends Delegator{
-	def getBelieves():Expando = new Expando(agent.believes)
+	/**
+	 * This will make believes available as expando
+	 * The expendo is a modifyable copy of the agents believes
+	 * The agent should be updated with the modified believes in the
+	 * expando after using this executor
+	 * @return
+	 */
+	val believes = new Expando(agent.believes)
 }
